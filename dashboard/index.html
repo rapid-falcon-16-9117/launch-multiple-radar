@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Multiple Radar — pre-token protocols, priced</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <h1>Launch Multiple Radar</h1>
+        <p class="tagline">Protocols that record no token yet, priced as if they launched today — and how to farm each one before they do.</p>
+      </div>
+    </div>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+
+<section class="method" aria-label="How the radar prices a launch">
+  <div class="method-inner">
+    <h2>How a launch gets its price</h2>
+    <p class="method-lede">The snapshot grades its own homework. For every category, the radar learns what the market
+    already pays per dollar of TVL from the protocols whose tokens <em>do</em> trade, then prices a pre-token
+    protocol the same way — adjusted only for what the snapshot says about that protocol itself.</p>
+    <ol class="formula">
+      <li><strong>Base</strong><span>TVL × category multiple — the median market cap ÷ TVL of trading peers, samples capped at 8× so one mania cannot price a category</span></li>
+      <li><strong>Momentum</strong><span>× 1 + 7-day TVL change × 0.5, change clamped to −60%…+150%</span></li>
+      <li><strong>Maturity</strong><span>× up to 1.5 for years operated with no token — scarcity compounds</span></li>
+      <li><strong>Reach</strong><span>× +4% per extra chain, capped at 1.25 — wider day-one distribution</span></li>
+    </ol>
+    <div class="multiples" id="multiples"></div>
+  </div>
+</section>
+
+<main class="board-wrap">
+  <div class="controls" role="search">
+    <label class="control grow">Search
+      <input id="q" type="search" placeholder="Protocol name or slug…" autocomplete="off">
+    </label>
+    <label class="control">Category
+      <select id="cat"><option value="">All categories</option></select>
+    </label>
+    <label class="control">Chain
+      <select id="chain"><option value="">All chains</option></select>
+    </label>
+    <label class="control">Sort by
+      <select id="sort">
+        <option value="rank">Implied value</option>
+        <option value="tvl">TVL</option>
+        <option value="change">7-day change</option>
+        <option value="multiple">Category multiple</option>
+        <option value="age">Age without a token</option>
+      </select>
+    </label>
+    <label class="control check">
+      <input id="watch" type="checkbox"> Watchlist only
+    </label>
+    <p class="count" id="count" aria-live="polite"></p>
+  </div>
+
+  <div class="board-grid">
+    <div class="table-scroll">
+      <table class="board" id="board">
+        <thead><tr>
+          <th class="num">#</th><th>Protocol</th><th>Category</th><th class="num">TVL</th>
+          <th class="num">7d</th><th class="num">Multiple</th><th class="num">Implied value</th><th class="bar-cell">Value ÷ TVL</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No protocol matches that filter. Loosen the search — the radar only prices protocols that record no token.</p>
+    </div>
+    <aside class="detail" id="detail" aria-label="Protocol detail"></aside>
+  </div>
+</main>
+
+<footer class="foot">
+  <p>Data: the sealed DefiLlama snapshot of <span id="asof"></span> — <span id="scanned"></span>.
+  An implied value is this radar's own model claim about a launch that may never happen; it is not a prediction and not financial advice.
+  Protocols are described as recording no token, per the snapshot's record. Model: launch-multiple-1.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
